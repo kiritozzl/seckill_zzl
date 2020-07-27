@@ -30,12 +30,12 @@ var seckill = {
                     var md5 = exposer['md5'];
                     var killUrl = seckill.URL.execution(seckillId,md5);
                     console.log('killUrl='+killUrl);
-                    try{
-                        $('#killBtn').one('click', function () {
-                            // 执行秒杀请求
-                            // 1.先禁用按钮
-                            $(this).addClass('disabled');
-                            // 2.发送秒杀请求
+                    $('#killBtn').one('click', function () {
+                        // 执行秒杀请求
+                        // 1.先禁用按钮
+                        $(this).addClass('disabled');
+                        // 2.发送秒杀请求
+                        try{
                             $.post(killUrl, {}, function (result) {
                                 var killResult = result['data'];
                                 var state = killResult['state'];
@@ -46,12 +46,11 @@ var seckill = {
                                 // }
                                 node.html('<span class="label label-success">' + stateInfo + '</span>');
                             });
-                        });
-                    }catch (err) {
-                        window.alert('error msg ' + err);
-                    }finally {
-                        node.html('<span class="label label-success">' + "重复秒杀!" + '</span>');
-                    }
+                        }catch (err) {
+                            console.log('error msg ' + err);
+                            node.html('<span class="label label-success">' + err + '</span>');
+                        }
+                    });
                     node.show();
                 }else{
                     // 未开启秒杀
